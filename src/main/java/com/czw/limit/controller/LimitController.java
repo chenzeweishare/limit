@@ -1,13 +1,19 @@
 package com.czw.limit.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.Random;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.google.common.collect.Lists;
+import com.google.common.io.Files;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import redis.clients.jedis.Jedis;
 
 /**
  * Created by: czw
@@ -73,7 +79,39 @@ public class LimitController {
 
     }
 
-    //TODO 分布式限流
+
+    /**
+     * 分布式限流
+     * @param request
+     * @return
+     */
+    @RequestMapping("/test/redis/lua")
+    public String  toRedisLua(HttpServletRequest request) throws IOException {
+
+        boolean isAccept = isAccept();
+
+        if (isAccept) {
+            return "没有限流";
+        }else{
+            return "被限流了";
+        }
+    }
+
+    private boolean isAccept() throws IOException {
+
+        String luaScript = Files.toString(new File("F:/lua/limit2.lua"), Charset.defaultCharset());
+
+        Jedis jedis = new Jedis("127.0.0.1", 6379);
+
+        String key = "Ip:" + System.currentTimeMillis() / 1000;
+        //限流大小
+        String limit = "3";
+
+        return (Long)jedis.eval(luaScript, Lists.newArrayList(key), Lists.newArrayList(limit)) == 1;
+    }
+
+
+
     //TODO 分布式锁
     //TODO Semaphore 高级版本
     //TODO Nginx限流, ip 接口
