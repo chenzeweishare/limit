@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.google.common.collect.Lists;
 import com.google.common.io.Files;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import redis.clients.jedis.Jedis;
@@ -26,6 +27,9 @@ public class LimitController {
     private AtomicInteger atomicInteger = new AtomicInteger();
     private Semaphore semaphore = new Semaphore(1); //允许10个线程获取许可.最大的并发数量
 
+
+    @Value("${server.port}")
+    private int port;
     /**
      * 限制某个接口的总并发数, 总请求数, 使用AtomicInteger设置为10, 该方法比较粗暴
      * @param request
@@ -90,10 +94,12 @@ public class LimitController {
 
         boolean isAccept = isAccept();
 
+        System.out.println("进来的是" + port + "端口 ========================= >");
+
         if (isAccept) {
-            return "没有限流";
+            return "没有限流"+ port + "端口 ========================= >";
         }else{
-            return "被限流了";
+            return "被限流了"+ port + "端口 ========================= >";
         }
     }
 
@@ -115,5 +121,6 @@ public class LimitController {
     //TODO 分布式锁
     //TODO Semaphore 高级版本
     //TODO Nginx限流, ip 接口
+    //TODO Hystrix限流
 
 }
