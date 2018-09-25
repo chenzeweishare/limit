@@ -10,22 +10,25 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by: czw
- * time:  2018/9/15 11:40
+ * @author czw
+ * @date 2018/9/25 23:19
  */
-
-//@Aspect
 @Component
 public class LimitAspect {
 
     private Semaphore semaphore = null;
 
-    //访问频率
+    /**
+     * 访问频率
+     */
     @Value("${access.frequency}")
     private int frequency;
 
 
-    private int timout = 1000; //毫秒
+    /**
+     * 毫秒
+     */
+    private int timout = 1000;
 
 
     @Pointcut("execution(public * com.czw.limit.controller.*.*(..))")

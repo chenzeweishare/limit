@@ -1,6 +1,9 @@
 package com.czw.limit.exception;
 
-
+/**
+ * @author czw
+ * @date 2018/9/25 23:19
+ */
 public class LimitException extends RuntimeException {
 
 

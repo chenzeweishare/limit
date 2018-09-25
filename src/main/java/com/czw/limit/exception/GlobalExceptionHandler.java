@@ -7,10 +7,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * Created by: czw
- * time:  2018/9/15 13:21
+ * @author czw
+ * @date 2018/9/25 23:19
  */
-
 @ControllerAdvice
 public class GlobalExceptionHandler {
 

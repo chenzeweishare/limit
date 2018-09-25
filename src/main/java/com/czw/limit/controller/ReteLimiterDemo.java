@@ -10,11 +10,14 @@ import com.google.common.util.concurrent.RateLimiter;
 
 
 /**
+ *
  * 1.令牌桶算法, 是有一个存放固定容量令牌的桶, 按照固定的速率往桶里添加令牌
  * 2.平滑限流某个接口的请求数
  * 有很多个任务，但希望每秒不超过X个，可用此类 
  * https://www.cnblogs.com/yeyinfu/p/7316972.html
- */ 
+ * @author czw
+ * @date 2018/9/25 23:19
+ */
 public class ReteLimiterDemo {
 	
 	 public static void main(String[] args) {  
@@ -40,7 +43,8 @@ public class ReteLimiterDemo {
 	        public UserRequest(int id) {  
 	            this.id = id;  
 	        }  
-	  
+
+	        @Override
 	        public void run() {  
 	            System.out.println(id);  
 	        }  

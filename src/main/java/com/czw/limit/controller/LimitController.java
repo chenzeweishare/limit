@@ -16,16 +16,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import redis.clients.jedis.Jedis;
 
-/**
- * Created by: czw
- * time:  2018/9/15 11:15
- */
 
 @RestController
+/**
+ * @author czw
+ * @date 2018/9/25 23:19
+ */
 public class LimitController {
 
     private AtomicInteger atomicInteger = new AtomicInteger();
-    private Semaphore semaphore = new Semaphore(1); //允许10个线程获取许可.最大的并发数量
+
+    /**
+     * 允许10个线程获取许可.最大的并发数量
+     */
+    private Semaphore semaphore = new Semaphore(1);
 
 
     @Value("${server.port}")
@@ -38,7 +42,8 @@ public class LimitController {
     @RequestMapping("/test/atomic")
     public String  index(HttpServletRequest request){
         try {
-            if (atomicInteger.incrementAndGet() > 3) { //允许2个线程获取许可.最大的并发数量
+            //允许2个线程获取许可.最大的并发数量
+            if (atomicInteger.incrementAndGet() > 3) {
                 return "oh, 你被限流了";
             }
             System.out.println("执行业务.....");
