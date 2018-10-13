@@ -123,9 +123,9 @@ public class LimitController {
 
 
 
-    //TODO 分布式锁
+    //TODO 分布式锁  见spring-cloud-all
     //TODO Semaphore 高级版本
     //TODO Nginx限流, ip 接口
-    //TODO Hystrix限流
+    //TODO Hystrix限流 见spring-cloud-all
 
 }
