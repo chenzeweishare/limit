@@ -15,7 +15,7 @@ import com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager;
  * @date 2018-12-24
  * @time 17:04
  */
-public class Demo {
+public class SentinelDemo {
 
     public static void main(String[] args) {
         initFlowRules();
